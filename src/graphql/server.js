@@ -16,6 +16,25 @@ app.use('/graphql', expressGraphQL({
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
 });
-
+// api url
+const api_url = 
+      "https://employeedetails.free.beeceptor.com/my/api/path";
+  
+// Defining async function
+async function getapi(url) {
+    
+    // Storing response
+    const response = await fetch(url);
+    
+    // Storing data in form of JSON
+    var data = await response.json();
+    console.log(data);
+    if (response) {
+        hideloader();
+    }
+    show(data);
+}sa
+// Calling that async function
+getapi(api_url);
 
 https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple

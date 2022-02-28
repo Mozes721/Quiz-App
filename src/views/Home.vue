@@ -1,10 +1,7 @@
-<template>
-
-	  <v-card
+<template >
+    <v-card
     class="mx-auto mt-5"
-    max-width="400"
-    
-  >
+    max-width="800" style="background-color: rgba(154, 192, 218, 0.8);"> 
   <v-card-title>
 	<h1 class="display-1">Lets check your knowledge?!</h1>
   </v-card-title>
@@ -14,79 +11,85 @@
       src="../assets/quiz.jpg"
     >
     </v-img>
-<v-spacer></v-spacer>
-    <v-card-subtitle>
-	<h2 class="display-2">
-      Select a Level and a Username
-	</h2>
-    </v-card-subtitle>
+  <v-spacer></v-spacer>
+      <v-card-subtitle>
+    <h2 class="display-2">
+        Select a Level and a Username
+    </h2>
+      </v-card-subtitle>
 	<v-spacer></v-spacer>
-	
-    <v-text-field
-      v-model="name"
-      :counter="10"
-      :rules="nameRules"
-      label="Name"
-
-      required
-    ></v-text-field>
-
     <v-card-actions>
-      <v-btn
-      :disabled="!valid"
-      color="yellow"
-      class="mr-4"
-      @click="validate"
-    >
-      Easy
-    </v-btn>
-
-    <v-btn
-      color="warning"
-      class="mr-4"
-      @click="reset"
-    >
-      Medium
-    </v-btn>
-
-    <v-btn
-      color="error"
-      @click="resetValidation"
-    >
-      Hard
-    </v-btn>
+        <v-text-field v-model="question_lenght" name="question_lenght" 
+              type="number" class="text-field" label="Question Count minimum 10" 
+              min="10" step="50">
+        </v-text-field>
     </v-card-actions>
     <v-card-actions>
-    <v-btn
-      color="success"
-      @click="resetValidation" 
-    >
-    <router-link to='/quiz'>
-      Start Game!
-    </router-link>
-    </v-btn>
+        <v-radio-group label="Select your difficulty" v-model="level">
+          <v-radio
+            label="Easy"
+            value="easy"
+          ></v-radio>
+          <v-radio
+            label="Medium"
+            value="medium"
+          ></v-radio>
+          <v-radio
+            label="Hard"
+            value="hard"
+          ></v-radio>
+        </v-radio-group>
+      </v-card-actions>
+      <v-card-actions>
+        <v-select
+        v-model="question_type"
+          :items="items"
+          label="Multiple Choise or boolean as True / False questions"
+        ></v-select>
+      </v-card-actions>
+    <v-card-actions>
+      <v-btn elevation="2"  color="success" :disabled="validated ? '' : disabled" @click="Selected">
+      <router-link style="text-decoration: none; color: inherit;" to='/quiz' >
+        Start Game!
+      </router-link>
+      </v-btn>
     </v-card-actions>
   </v-card>
 
 </template>
-<style scoped>
-.v-text-field{
-      display: block;
-	margin-right: auto;
-	margin-left: auto;
-      width: 350px;
-}
-</style>
+
 
 <script>
   export default {
-    data: () => ({
-      valid: true,
-      name: '',
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-      ],
-    })
+   data () {
+      return {
+        question_lenght: '',
+        level: '',
+        question_type: '',
+        items: [
+          'multiple',
+          'boolean',
+        ],
+        selection: []
+      } 
+   },
+   methods: {
+    Selected () { 
+      this.selection.push(this.question_lenght, this.level, this.question_type)
+      this.$store.commit("getData", this.selection);
+    },
+
+   },
+   computed: {
+    validated() {
+      if (this.question_type !== '' && this.level !== '' && this.question_lenght !== '' &&  this.question_lenght >= 10) {
+      	return false
+      }
+      else {
+        return true
+      }
+    },
+
+  }
   }
 </script>
