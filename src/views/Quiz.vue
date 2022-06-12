@@ -1,16 +1,35 @@
 <template>
   <div>
-    <h3>Component</h3>
-    <p>{{$store.state.data}}</p>
+    <h3>Components</h3>
+    <main v-if="this.quizArr[2] === 'multiple'" >
+      <QuizMultipleChoice v-bind:quizArr="quizArr"/>
+    </main>
+    <main v-else-if="this.quizArr[2] === 'boolean'" >
+      <QuizTrueFalse  v-bind:quizArr="quizArr"/>
+    </main>
   </div>
 </template>
 
+<!-- https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple -->
 <script>
+import QuizMultipleChoice from '../components/QuizMultipleChoice.vue';
+import QuizTrueFalse from '../components/QuizTrueFalse.vue';
 export default {
-  computed: {
-    usersFromStore() {
-      return this.$store.state.data;
+    data () {
+      return {
+        quizArr: []
+      } 
+   },
+    created() {
+        var quizType = this.$store.state.data;
+        this.quizArr = quizType.split(",");
+        console.log(this.quizArr);
     },
-  },
+    computed: {
+    // usersFromStore() {
+    //   return this.$store.state.data;
+    // },
+    },
+    components: { QuizMultipleChoice, QuizTrueFalse }
 };
 </script>

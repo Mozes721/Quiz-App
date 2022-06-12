@@ -14,7 +14,7 @@
   <v-spacer></v-spacer>
       <v-card-subtitle>
     <h2 class="display-2">
-        Select a Level and a Username
+        Select a Level 
     </h2>
       </v-card-subtitle>
 	<v-spacer></v-spacer>
