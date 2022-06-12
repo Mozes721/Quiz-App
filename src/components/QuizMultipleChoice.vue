@@ -24,7 +24,7 @@ export default {
         .then(response => (this.info = response))
   },
   methods: {
-
+ 
       }
 }
 
