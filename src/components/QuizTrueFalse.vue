@@ -4,7 +4,7 @@
     <p>{{this.info}}</p>
     </v-card>
 </template>
-
+  
 <script>
 import axios from 'axios'
 export default {
