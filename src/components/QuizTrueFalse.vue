@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <h3>True False</h3>
+        <h3>True False Quiz</h3>
     <p>{{this.info}}</p>
     </v-card>
 </template>
