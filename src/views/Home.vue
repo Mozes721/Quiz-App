@@ -9,7 +9,7 @@
       class="white--text align-end"
       height="200px"
       src="../assets/quiz.jpg"
-    >
+    > 
     </v-img>
   <v-spacer></v-spacer>
       <v-card-subtitle>
