@@ -2,8 +2,8 @@
      <v-card
     class="mx-auto mt-5"
     max-width="800" style="background-color: rgba(154, 192, 218, 0.8);"> 
-  <v-card-title>
-	<h1 class="display-1 " >Multiple Choice Quiz</h1>
+  <v-card-title>  
+	<h1 class="display-1">Multiple Choice Quiz</h1>
   </v-card-title>
     <v-img
       class="white--text align-end"
