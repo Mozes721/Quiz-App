@@ -16,7 +16,7 @@
         <h2>{{this.currentQuestion}}</h2>
       </v-subheader>
 	<v-spacer></v-spacer>
-    <v-card-actions>
+    <v-card-actions rules="required">
      <v-radio-group v-model="answered">
         <v-radio
           v-for="n in this.shuffledAnswers"
@@ -25,7 +25,7 @@
           :value="n"
         ></v-radio>
       </v-radio-group>
-     <v-btn
+     <v-btn to="/quiz"
       class="mr-4"
     >
       Exit
@@ -50,16 +50,15 @@ export default {
             currentIndex: 0,
             answered: null,
             correctAnswer: null,
-            selectedIndex:null,
             shuffledAnswers: [],
-            answered: false
+            correct: 0
         }
     }, 
-    watch:{
-      currentQuestion(){
-         this.selectedIndex=null
-         this.answered=false
+    watch: {
+      currentQuestion() {
+        this.answered = false
       }
+
     },
   methods: {
             getAPIquestions: function() {
@@ -98,30 +97,36 @@ export default {
             }
       
              this.shuffledAnswers = _.shuffle(answers)
-             this.correctIndex = this.shuffledAnswers.indexOf(this.questions.data.results[this.currentIndex].correct_answer)
              console.log(this.shuffledAnswers)
         },
     
-        answerClass(answer) {
-            let k = ""
-            if(!this.answered && this.selectedIndex === answer)
-            k = 'selected'
-            else if (this.answered && this.correctIndex === answer)
-            k = 'correct'
-            else if (this.answered && this.selectedIndex === answer && this.correctIndex !== answer)
-            k = 'incorrect'
-            
-            return k
+        answerClass: function() {
+          if(!this.correctAnswer && !this.answered){
+            return
+          }
+          if(this.correctAnswer === this.answered) {
+          this.correct++
+          }
+          else if (this.correctAnswer !== this.answered){
+          console.log("incorrect")
+          }
+          console.log(this.correct)
         },
         next: function() {
+            if (!this.answered) {
+              alert("You didn't select a value")
+              return
+            }
             if (this.currentIndex >= parseInt(this.quizArr[0] - 1)) {
                 alert("your done with questions")
             } else {
+                this.answerClass()
                 this.currentIndex++
-                console.log(this.answered)
                 this.getQuestion()
                 this.getChoices()
-                this.answerClass()
+  
+                console.log(this.correctAnswer)
+                console.log(this.answered)
             }
         },
         },
