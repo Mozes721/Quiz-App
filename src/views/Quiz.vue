@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h3>Components</h3>
+  <div> 
     <main v-if="this.quizArr[2] === 'multiple'" >
       <QuizMultipleChoice v-bind:quizArr="quizArr"/>
     </main>
@@ -10,7 +9,6 @@
   </div>
 </template>
 
-<!-- https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple -->
 <script>
 import QuizMultipleChoice from '../components/QuizMultipleChoice.vue';
 import QuizTrueFalse from '../components/QuizTrueFalse.vue';

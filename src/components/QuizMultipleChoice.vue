@@ -2,8 +2,10 @@
      <v-card
     class="mx-auto mt-5"
     max-width="800" style="background-color: rgba(154, 192, 218, 0.8);"> 
-  <v-card-title>   
+  <v-card-title>  
 	<h1 class="display-1">Multiple Choice Quiz</h1>
+  <v-spacer></v-spacer>
+  <p>Currently answering question Nr:{{this.currentIndex +1}}</p>
   </v-card-title>
     <v-img
       class="white--text align-end"
@@ -25,7 +27,7 @@
           :value="n"
         ></v-radio>
       </v-radio-group>
-     <v-btn to="/quiz"
+     <v-btn @click="exit"
       class="mr-4"
     >
       Exit
@@ -65,6 +67,7 @@ export default {
                 let link = 'https://opentdb.com/api.php?'
                 let quiz = 'amount='+this.quizArr[0]+'&difficulty='+this.quizArr[1]+'&type='+this.quizArr[2]
                 let url = link.concat(quiz)
+                console.log(url)
                 return axios
                 .get(url)
                 .then(response => (this.questions = response))
@@ -73,9 +76,8 @@ export default {
                 })
             },
         getQuestion: function() {
-
             let question = this.questions.data.results[this.currentIndex].question
-            if (question.includes('&quot;')) {
+            if (question.includes(('&quot;'))) {
                 this.currentQuestion = question.replace(/(&quot\;)/g,"\ ")
             }  
             else if (question.includes('&#039;')) {
@@ -88,7 +90,7 @@ export default {
         getChoices: function() {
              this.correctAnswer = this.questions.data.results[this.currentIndex].correct_answer
              let answers = [...this.questions.data.results[this.currentIndex].incorrect_answers,this.questions.data.results[this.currentIndex].correct_answer]
-             console.log(answers)
+            //  console.log(answers)
              if (answers.includes('&quot;')) {
                 answer = answer.replace(/(&quot\;)/g,"\ ")
             }  
@@ -97,7 +99,7 @@ export default {
             }
       
              this.shuffledAnswers = _.shuffle(answers)
-             console.log(this.shuffledAnswers)
+            //  console.log(this.shuffledAnswers)
         },
     
         answerClass: function() {
@@ -114,21 +116,25 @@ export default {
         },
         next: function() {
             if (!this.answered) {
+              this.answerClass()
               alert("You didn't select a value")
               return
             }
             if (this.currentIndex >= parseInt(this.quizArr[0] - 1)) {
-                alert("your done with questions")
+                this.answerClass()
+                this.$store.commit("updateResults", this.correct)
+                this.$router.push("/result")
             } else {
                 this.answerClass()
                 this.currentIndex++
                 this.getQuestion()
                 this.getChoices()
-  
                 console.log(this.correctAnswer)
-                console.log(this.answered)
             }
         },
+        exit: function() {
+          this.$router.push("/")
+        }
         },
       mounted: async function() {
         await this.getAPIquestions()
