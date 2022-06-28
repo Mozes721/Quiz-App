@@ -1,5 +1,5 @@
 <template>
-     <v-card
+     <v-card 
     class="mx-auto mt-5"
     max-width="800" style="background-color: rgba(154, 192, 218, 0.8);"> 
   <v-card-title>  
