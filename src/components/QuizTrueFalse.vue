@@ -1,10 +1,10 @@
 <template>
      <v-card
-    class="mx-auto mt-5 "
-    max-width="800"
+    class="mx-auto mt-5"
+    max-width="800" 
     elevation="4"> 
-  <v-card-title style="background-color: #81D4FA" primary-title class="justify-center rounded-card mb-1">  
-	<h1 class="font-weight-thin">Multiple Choice Quiz</h1>
+  <v-card-title style="background-color: #81D4FA" primary-title class="justify-center rounded-card mb-1">
+	<h1 class="font-weight-thin">True False Choice Quiz</h1>
   </v-card-title>
   <v-card-text primary-title class="pt-2">
     <p>Currently answering question Nr:{{this.currentIndex +1}}</p>
@@ -12,33 +12,33 @@
     <v-img
       class="white--text align-end"
       height="200px"
-      src="../assets/multiple_choice.jpg"
-      
+      src="../assets/true_false.jpg"
     >
     </v-img>
   <v-spacer></v-spacer>
-     <v-card style="background-color: #E1F5FE">
-
-     <v-card-text v-if="loading">
-        <h4 class="justify-center font-italic" >Data is being loaded one moment please...</h4>
-    </v-card-text>
-    <v-card-text v-else>
-        <h4 class="justify-center font-italic" >{{this.currentQuestion}}</h4>
-    </v-card-text>
-      <v-spacer></v-spacer>
-        <v-card-actions rules="required">
-          <v-radio-group v-model="answered">
-              <v-radio
-                v-for="n in this.shuffledAnswers"
-                :key="n"
-                :label="`${n}`"
-                :value="n"
-              ></v-radio>
-            </v-radio-group>
-        </v-card-actions>
-    </v-card>
+  <v-card style="background-color: #E1F5FE">
+  <v-card-text v-if="loading">
+    <h4 class="justify-center font-italic" >Data is being loaded one moment please...</h4>
+  </v-card-text>
+  <v-card-text v-else>
+    <h4 class="justify-center font-italic" >{{this.currentQuestion}}</h4>
+  </v-card-text>
+	<v-spacer></v-spacer>
+    <v-card-actions style="background-color: #E1F5FE">
+        <v-radio-group label="Select the correct answer" v-model="answered">
+          <v-radio
+            label="True"
+            value="True"
+          ></v-radio>
+          <v-radio
+            label="False"
+            value="False"
+          ></v-radio>
+        </v-radio-group>
+      </v-card-actions>
+      </v-card>
     <v-card-actions class="d-flex justify-space-around">
-    <v-btn @click="exit"
+      <v-btn @click="exit"
       elevation="2"
       color="error"
       size="x-large"
@@ -49,7 +49,6 @@
     elevation="2"
     color="green"
     size="x-large"
-   
     >
       Next
     </v-btn>
@@ -59,9 +58,8 @@
 
 <script>
 import axios from 'axios'
-import _ from 'lodash'
 export default {
-    props:
+     props:
         ['quizArr'],
     data() {
         return {
@@ -71,7 +69,6 @@ export default {
             currentIndex: 0,
             answered: null,
             correctAnswer: null,
-            shuffledAnswers: [],
             correct: 0
         }
     }, 
@@ -81,7 +78,7 @@ export default {
       }
     },
   methods: {
-            getAPIquestions: function() {
+        getAPIquestions: function() {
                 let link = 'https://opentdb.com/api.php?'
                 let quiz = 'amount='+this.quizArr[0]+'&difficulty='+this.quizArr[1]+'&type='+this.quizArr[2]
                 let url = link.concat(quiz)
@@ -106,20 +103,11 @@ export default {
             }
             this.loading = false
         },
-        getChoices: function() {
+             getCorrectAnswer: function() {
              this.correctAnswer = this.questions.data.results[this.currentIndex].correct_answer
-             let answers = [...this.questions.data.results[this.currentIndex].incorrect_answers,this.questions.data.results[this.currentIndex].correct_answer]
-             if (answers.includes('&quot;')) {
-                answer = answer.replace(/(&quot\;)/g,"\ ")
-            }  
-            else if (answers.includes('&#039;')) {
-                answer = answer.replace(/(&#039\;)/g,"\'")
-            }
-      
-             this.shuffledAnswers = _.shuffle(answers)
+             console.log(this.correctAnswer)
         },
-    
-        answerClass: function() {
+          answerClass: function() {
           if(!this.correctAnswer && !this.answered){
             return
           }
@@ -127,11 +115,10 @@ export default {
           this.correct++
           }
           else if (this.correctAnswer !== this.answered){
-          console.log("incorrect")
           }
-          console.log(this.correct)
+
         },
-        next: function() {
+      next: function() {
             if (!this.answered) {
               this.answerClass()
               alert("You didn't select a value")
@@ -145,18 +132,19 @@ export default {
                 this.answerClass()
                 this.currentIndex++
                 this.getQuestion()
-                this.getChoices()
+  
                 console.log(this.correctAnswer)
-            }
-        },
-        exit: function() {
+                console.log(this.answered)
+              }
+            },
+            exit: function() {
           this.$router.push("/")
         }
         },
-      mounted: async function() {
+       mounted: async function() {
         await this.getAPIquestions()
         this.getQuestion()
-        this.getChoices()
+        this.getCorrectAnswer()
       }
 }
 
