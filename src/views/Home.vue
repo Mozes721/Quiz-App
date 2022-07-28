@@ -5,7 +5,7 @@
   <v-card-title style="background-color: #81D4FA" primary-title class="justify-center rounded-card mb-1">
     <h1 class="font-weight-thin">Lets check your knowledge?!</h1>
   </v-card-title>
-    <v-img
+    <v-img 
       class="white--text align-end"
       height="150px"
       src="../assets/quiz.jpg"
