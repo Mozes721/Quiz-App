@@ -21,11 +21,9 @@ export default {
     created() {
         var quizType = this.$store.state.data;
         var results = this.$store.state.results
-        console.log(results);
         var quizArr = quizType.split(",");
         this.results.push(quizArr[0])
         this.results.push(results)
-        console.log(this.results)
     },
   methods: {
     newGame: function() {
