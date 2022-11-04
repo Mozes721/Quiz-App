@@ -3,7 +3,7 @@
     class="mx-auto mt-4"
     max-width="700" style="background-color: #fff" height="95%"> 
   <v-card-title style="background-color: #81D4FA" primary-title class="justify-center rounded-card mb-1">
-    <h1 class="font-weight-thin">Lets check your knowledge?!</h1>
+    <h1 class="font-weight-thin">Let's check your knowledge?!</h1>
   </v-card-title>
     <v-img 
       class="white--text align-end"
