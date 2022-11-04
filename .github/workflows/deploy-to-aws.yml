@@ -25,9 +25,9 @@ jobs:
        npm install -g npm@latest
     - name: Npm cache clean
       run: |
-        npm cache clean
         npm cache verify
-        npm audit fix
+        npm cache clean --force
+        npm audit fix --force
     - name: Run npm build 
       run: npm build
     - name: S3 Sync 
