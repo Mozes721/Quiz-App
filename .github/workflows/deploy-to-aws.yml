@@ -19,13 +19,12 @@ jobs:
       uses: actions/setup-node@v3.5.1
       with:
         node-version: 16.x
-    - name: Run npm install & fix
+    - name: Run npm install & build
       run: |
        rm -rf node_modules 
        npm install -g npm@latest
        npm cache verify
-    - name: Run npm build 
-      run: npm run build
+       npm run build
     - name: S3 Sync 
       uses: jakejarvis/s3-sync-action@v0.5.1
       with:
