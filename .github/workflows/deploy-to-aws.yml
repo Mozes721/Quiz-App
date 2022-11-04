@@ -22,9 +22,12 @@ jobs:
     - name: Run npm install & fix
       run: |
        rm -rf node_modules 
-       npm i -g npm@latest
-       npm cache clean --force
-       npm audit fix --force
+       npm install -g npm@latest
+    - name: Npm cache clean
+      run: |
+        npm cache clean --force
+        npm cache verify
+        npm audit fix --force
     - name: Run npm build 
       run: npm build
     - name: S3 Sync 
