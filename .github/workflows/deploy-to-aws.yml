@@ -21,8 +21,6 @@ jobs:
         node-version: 16.x
     - name: Run npm install
       run: npm install
-    - name: Run audit
-      uses: tangro/actions-audit@v2.0.4
     - name: S3 Sync 
       uses: jakejarvis/s3-sync-action@v0.5.1
       with:
