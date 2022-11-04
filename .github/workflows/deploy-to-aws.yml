@@ -13,22 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Setup node.js environment 
-        uses: actions/setup-node@v3.5.1
-        
-      - name: Npm install & npm build 
-        run: | 
-          npm install
-          npm audit fix
-          npm audit fix --force
-          npm build 
-      - name: S3 Sync 
-        uses: jakejarvis/s3-sync-action@v0.5.1
-        with:
+    - name: Checkout latest code
+      uses: actions/checkout@v3
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3.5.1
+      with:
+        node-version: 16.x
+    - name: Run npm install
+      run: npm install
+    - name: Run audit
+      uses: tangro/actions-audit@v2.0.4
+    - name: S3 Sync 
+      uses: jakejarvis/s3-sync-action@v0.5.1
+      with:
           args: --acl public-read --delete 
-        env:
+      env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }} 
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} 
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
