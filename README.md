@@ -17,3 +17,7 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Play the game 
+http://quiz-vue-app.s3-website.eu-central-1.amazonaws.com/
